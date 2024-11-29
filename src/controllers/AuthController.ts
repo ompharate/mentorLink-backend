@@ -7,6 +7,47 @@ interface loginPayloadType {
   image: string;
   password?: string;
 }
+async function googleAuth(req: any, res: any) {
+  try {
+    const body: loginPayloadType = req.body;
+    let findUser = await prismaClient.user.findUnique({
+      where: {
+        email: body.email,
+      },
+    });
+
+    if (!findUser) {
+      findUser = await prismaClient.user.create({
+        data: {
+          email: body.email,
+          name: body.name,
+          provider: body.oauth_provider,
+          password: body.password,
+          image: body.image,
+        },
+      });
+    }
+    let JWTPayload = {
+      name: body.name,
+      email: body.email,
+      id: findUser.id,
+    };
+    const token = jwt.sign(JWTPayload, process.env.JWT_SECRET!, {
+      expiresIn: "365d",
+    });
+    return res.json({
+      message: "Logged in successfully!",
+      user: {
+        ...findUser,
+        token: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Something went wrong.please try again!" });
+  }
+}
 
 async function signIn(req: any, res: any) {
   try {
@@ -83,4 +124,4 @@ async function signUp(req: any, res: any) {
   }
 }
 
-export { signIn, signUp };
+export { signIn, signUp, googleAuth };
