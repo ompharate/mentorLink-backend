@@ -14,6 +14,7 @@ model User {
   password   String?
   provider   String?      @default("email")
   image      String?
+  isMentor   Boolean      @default(false)
   created_at DateTime     @default(now())
   instructor instructor[]
 }
@@ -27,7 +28,7 @@ model instructor {
   image       String
   description String
   title       String
-  skills      String[]
-  rate        String
+  skills      String
+  hourlyRate  String
   created_at  DateTime @default(now())
 }

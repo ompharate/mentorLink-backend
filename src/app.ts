@@ -5,7 +5,7 @@ const app: Application = express();
 import "dotenv/config";
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req: any, res: any) => {
   return res.send("It's working 🙌");
