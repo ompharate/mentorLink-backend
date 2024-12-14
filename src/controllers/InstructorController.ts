@@ -9,6 +9,7 @@ interface InstructorPayload {
   title: string;
   skills: string;
   hourlyRate: string;
+  category: string;
 }
 
 class Instructor {
@@ -25,7 +26,8 @@ class Instructor {
           image: body.image,
           title: body.title,
           skills: body.skills,
-          hourlyRate: String(body.hourlyRate),
+          category: body.category,
+          hourlyRate: Number(body.hourlyRate),
         },
       });
       await prismaClient.user.update({
@@ -47,7 +49,31 @@ class Instructor {
 
   static async getAllMentors(req: any, res: any) {
     try {
-      const mentors = await prismaClient.instructor.findMany();
+      const { maxrate, category } = req.query;
+      const maxRate = maxrate ? Number(maxrate) : undefined;
+      if (maxRate !== undefined && isNaN(maxRate)) {
+        return res.status(400).json({ message: "Invalid maxrate" });
+      }
+
+      // const whereClause: any = {};
+
+      // if (maxRate !== undefined) whereClause.hourlyRate = { lte: maxRate };
+      // if (category)
+      //   whereClause.category = {
+      //     contains: category,
+      //     mode: "insensitive",
+      //   };
+
+      // console.log(whereClause);
+
+      const mentors = await prismaClient.instructor.findMany({
+        where: {
+          hourlyRate: {
+            lte: Number(maxrate),
+          },
+        },
+      });
+
       return res.json(mentors);
     } catch (error) {
       return res.status(500).json({ message: "Failed to get mentors" });

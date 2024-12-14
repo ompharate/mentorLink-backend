@@ -26,9 +26,10 @@ model instructor {
   name        String
   email       String   @unique
   image       String
+  category    String
   description String
   title       String
   skills      String
-  hourlyRate  String
+  hourlyRate  Int
   created_at  DateTime @default(now())
 }
