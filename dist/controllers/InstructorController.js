@@ -3,7 +3,6 @@ class Instructor {
     static async createMentor(req, res) {
         try {
             const body = req.body;
-            console.log(body);
             await prismaClient.instructor.create({
                 data: {
                     userId: body.userId,
@@ -40,20 +39,16 @@ class Instructor {
             if (maxRate !== undefined && isNaN(maxRate)) {
                 return res.status(400).json({ message: "Invalid maxrate" });
             }
-            // const whereClause: any = {};
-            // if (maxRate !== undefined) whereClause.hourlyRate = { lte: maxRate };
-            // if (category)
-            //   whereClause.category = {
-            //     contains: category,
-            //     mode: "insensitive",
-            //   };
-            // console.log(whereClause);
+            const whereClause = {};
+            if (maxRate !== undefined)
+                whereClause.hourlyRate = { lte: maxRate };
+            if (category)
+                whereClause.category = {
+                    contains: category,
+                    mode: "insensitive",
+                };
             const mentors = await prismaClient.instructor.findMany({
-                where: {
-                    hourlyRate: {
-                        lte: Number(maxrate),
-                    },
-                },
+                where: Object.keys(whereClause).length > 0 ? whereClause : undefined,
             });
             return res.json(mentors);
         }
