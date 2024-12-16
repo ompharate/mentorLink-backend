@@ -11,7 +11,8 @@ router.post("/auth/signup", signUp);
 
 router.post("/create-mentor", Instructor.createMentor);
 router.get("/mentors", Instructor.getAllMentors);
-router.get("/mentor/:id", Instructor.getMentorById);
+router.get("/mentor/:id", Instructor.getMentorByUserId);
+router.get("/mentor", Instructor.getMentorById);
 
 router.get("/user/:userId", User.getUser);
 

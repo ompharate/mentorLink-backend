@@ -9,14 +9,14 @@ interface InstructorPayload {
   title: string;
   skills: string;
   hourlyRate: string;
-  category: string;
+  Category: string;
 }
 
 class Instructor {
   static async createMentor(req: any, res: any) {
     try {
       const body: InstructorPayload = req.body;
-
+      console.log(body);
       await prismaClient.instructor.create({
         data: {
           userId: body.userId,
@@ -25,8 +25,7 @@ class Instructor {
           description: body.description,
           image: body.image,
           title: body.title,
-          skills: body.skills,
-          category: body.category,
+          category: body.Category,
           hourlyRate: Number(body.hourlyRate),
         },
       });
@@ -80,11 +79,25 @@ class Instructor {
     }
   }
 
-  static async getMentorById(req: any, res: any) {
+  static async getMentorByUserId(req: any, res: any) {
     try {
       const mentorId = req.params.id;
       const mentor = await prismaClient.instructor.findFirst({
         where: { userId: mentorId },
+      });
+      if (!mentor) {
+        return res.status(404).json({ message: "Mentor not found" });
+      }
+      return res.json(mentor);
+    } catch (error) {
+      return res.status(500).json({ message: "Failed to get mentor" });
+    }
+  }
+  static async getMentorById(req: any, res: any) {
+    try {
+      const mentorId = req.query.id;
+      const mentor = await prismaClient.instructor.findUnique({
+        where: { id: mentorId },
       });
       if (!mentor) {
         return res.status(404).json({ message: "Mentor not found" });
