@@ -16,7 +16,7 @@ model User {
   image      String?
   isMentor   Boolean      @default(false)
   created_at DateTime     @default(now())
-  instructor instructor[]
+  instructor instructor[] 
 }
 
 model instructor {
@@ -29,6 +29,9 @@ model instructor {
   category    String
   description String
   title       String
-  hourlyRate  Int
-  created_at  DateTime @default(now())
+  tags        String[]
+  keyPoints   String[]
+
+  hourlyRate Int
+  created_at DateTime @default(now())
 }

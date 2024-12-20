@@ -28,6 +28,31 @@ class User {
       isMentor: true,
     });
   }
+
+  static async allocateMentor(req: any, res: any) {
+    const { userId, mentorId } = await req.body;
+    console.log(userId, mentorId);
+    if (!userId || !mentorId) {
+      return res.json({
+        message: "Please provide user ID and instructor ID",
+      });
+    }
+
+    await prismaClient.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        instructor: {
+          connect: { id: mentorId },
+        },
+      },
+    });
+
+    return res.json({
+      message: "Instructor linked successfully",
+    });
+  }
 }
 
 export default User;

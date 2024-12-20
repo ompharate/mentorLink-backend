@@ -13,4 +13,4 @@ app.get("/", (req: any, res: any) => {
 
 app.use("/api", Routes);
 
-app.listen(8080, () => console.log("server listening on port 8080"));
+app.listen(8080, () => console.log("server listening on port 8080")); 

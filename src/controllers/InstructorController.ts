@@ -10,6 +10,8 @@ interface InstructorPayload {
   skills: string;
   hourlyRate: string;
   Category: string;
+  tags: string[];
+  keyPoints: string[];
 }
 
 class Instructor {
@@ -25,8 +27,10 @@ class Instructor {
           description: body.description,
           image: body.image,
           title: body.title,
-          category: body.Category,
+          category: body.Category,  
           hourlyRate: Number(body.hourlyRate),
+          tags: body.tags,
+          keyPoints: body.keyPoints,
         },
       });
       await prismaClient.user.update({
@@ -68,11 +72,9 @@ class Instructor {
         whereClause.name = { contains: search, mode: "insensitive" };
       }
 
-      console.log(whereClause);
       const mentors = await prismaClient.instructor.findMany({
         where: Object.keys(whereClause).length > 0 ? whereClause : undefined,
       });
-
       return res.json(mentors);
     } catch (error) {
       return res.status(500).json({ message: "Failed to get mentors" });
