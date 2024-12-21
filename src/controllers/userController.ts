@@ -38,14 +38,10 @@ class User {
       });
     }
 
-    await prismaClient.user.update({
-      where: {
-        id: userId,
-      },
+    await prismaClient.userInstructor.create({
       data: {
-        instructor: {
-          connect: { id: mentorId },
-        },
+        userId,
+        instructorId: mentorId,
       },
     });
 

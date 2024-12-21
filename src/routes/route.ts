@@ -14,12 +14,12 @@ router.post("/auth/signup", signUp);
 // user routes
 router.get("/user/:userId", User.getUser);
 router.post("/user/allocate-mentor", User.allocateMentor);
-
 // instructor routes
 router.post("/create-mentor", Instructor.createMentor);
 router.get("/mentors", Instructor.getAllMentors);
 router.get("/mentor/:id", Instructor.getMentorByUserId);
 router.get("/mentor", Instructor.getMentorById);
+router.get("/user/mentors/:userId", Instructor.fetchAllocatedMentors);
 
 //payment routes
 router.post("/payment/create-order", paymentController.createOrder);

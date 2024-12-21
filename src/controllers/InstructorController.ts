@@ -27,7 +27,7 @@ class Instructor {
           description: body.description,
           image: body.image,
           title: body.title,
-          category: body.Category,  
+          category: body.Category,
           hourlyRate: Number(body.hourlyRate),
           tags: body.tags,
           keyPoints: body.keyPoints,
@@ -107,6 +107,24 @@ class Instructor {
       return res.json(mentor);
     } catch (error) {
       return res.status(500).json({ message: "Failed to get mentor" });
+    }
+  }
+
+  static async fetchAllocatedMentors(req: any, res: any) {
+    try {
+      const userId = req.params.userId;
+      console.log(userId);
+      const mentors = await prismaClient.userInstructor.findMany({
+        where: {
+          userId: userId,
+        },
+        include: {
+          instructor: true,
+        },
+      });
+      return res.json(mentors);
+    } catch (error) {
+      return res.status(500).json({ message: "Failed to get mentors" });
     }
   }
 }
