@@ -20,7 +20,7 @@ router.get("/mentors", Instructor.getAllMentors);
 router.get("/mentor/:id", Instructor.getMentorByUserId);
 router.get("/mentor", Instructor.getMentorById);
 router.get("/user/mentors/:userId", Instructor.fetchAllocatedMentors);
-
+router.get("/mentors/users/:userId",Instructor.fetchMentorsUsers)
 //payment routes
 router.post("/payment/create-order", paymentController.createOrder);
 export default router;

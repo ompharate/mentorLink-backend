@@ -127,5 +127,28 @@ class Instructor {
       return res.status(500).json({ message: "Failed to get mentors" });
     }
   }
+
+  static async fetchMentorsUsers(req: any, res: any) {
+    try {
+      const userId = req.params.userId;
+      console.log(userId);
+      const mentors = await prismaClient.instructor.findFirst({
+        where: {
+          userId: userId,
+        },
+        include: {
+          userLinks: {
+            include: {
+              user: true,
+            },
+          },
+        },
+      });
+      return res.json(mentors);
+    } catch (error) {
+      return res.status(500).json({ message: "Failed to get mentors" });
+    }
+  }
 }
+
 export default Instructor;
