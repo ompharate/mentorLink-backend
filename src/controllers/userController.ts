@@ -31,7 +31,6 @@ class User {
 
   static async allocateMentor(req: any, res: any) {
     const { userId, mentorId } = await req.body;
-    console.log(userId, mentorId);
     if (!userId || !mentorId) {
       return res.json({
         message: "Please provide user ID and instructor ID",

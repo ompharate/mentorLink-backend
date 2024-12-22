@@ -6,6 +6,7 @@ interface InstructorPayload {
   email: string;
   description: string;
   image: string;
+  userImage: string;
   title: string;
   skills: string;
   hourlyRate: string;
@@ -18,9 +19,9 @@ class Instructor {
   static async createMentor(req: any, res: any) {
     try {
       const body: InstructorPayload = req.body;
-      console.log(body);
       await prismaClient.instructor.create({
         data: {
+          userImage: body.userImage,
           userId: body.userId,
           name: body.name,
           email: body.email,
@@ -53,7 +54,7 @@ class Instructor {
   static async getAllMentors(req: any, res: any) {
     try {
       const { maxrate, category, search } = req.query;
-
+     
       const maxRate = maxrate ? Number(maxrate) : undefined;
       if (maxRate !== undefined && isNaN(maxRate)) {
         return res.status(400).json({ message: "Invalid maxrate" });
@@ -113,7 +114,6 @@ class Instructor {
   static async fetchAllocatedMentors(req: any, res: any) {
     try {
       const userId = req.params.userId;
-      console.log(userId);
       const mentors = await prismaClient.userInstructor.findMany({
         where: {
           userId: userId,
@@ -131,7 +131,6 @@ class Instructor {
   static async fetchMentorsUsers(req: any, res: any) {
     try {
       const userId = req.params.userId;
-      console.log(userId);
       const mentors = await prismaClient.instructor.findFirst({
         where: {
           userId: userId,

@@ -23,6 +23,7 @@ model User {
 model Instructor {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   userId      String   @db.ObjectId
+  userImage   String
   name        String
   email       String   @unique
   image       String
@@ -53,5 +54,7 @@ model messages {
   senderId   String   @db.ObjectId
   receiverId String   @db.ObjectId
   message    String
+  image      String?
+  name       String
   created_at DateTime @default(now())
 }
