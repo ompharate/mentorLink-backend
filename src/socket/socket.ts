@@ -15,22 +15,13 @@ export function initializeSocket(server: http.Server): Server {
   io.on("connection", (socket: Socket) => {
     socket.on("register", ({ userId, name }) => {
       userSocketMap.set(userId, socket.id);
-      console.log(
-        `User ${name} registered: ${userId} with socket id: ${socket.id}`
-      );
+    
     });
 
     socket.on(
       "message",
       async ({ userId, partnerId, message, name, image }) => {
-        console.log(
-          "Message received:",
-          message,
-          partnerId,
-          message,
-          name,
-          image
-        );
+     
         await prismaClient.messages.create({
           data: {
             name: name,
@@ -60,11 +51,9 @@ export function initializeSocket(server: http.Server): Server {
     );
 
     socket.on("disconnect", () => {
-      console.log("A user disconnected:", socket.id);
       for (let [userId, socketId] of userSocketMap.entries()) {
         if (socketId === socket.id) {
           userSocketMap.delete(userId);
-          console.log(`User ${userId} removed from map`);
           break;
         }
       }
