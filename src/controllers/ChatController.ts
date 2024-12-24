@@ -1,5 +1,5 @@
 import { AccessToken } from "livekit-server-sdk";
-import prismaClient from "../config/db.config";
+import prismaClient from "../config/db.config.js";
 class ChatController {
   public async getUserChatById(req: any, res: any) {
     const chatId = req.params.userId;

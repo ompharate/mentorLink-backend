@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "set NODE_ENV=PRODUCTION & node dist/app.js",
+    "start": "cross-env NODE_ENV=PRODUCTION node dist/app.js",
     "build": "npx tsc -p .",
     "dev": "npx tsx watch src/app.ts"
   },
@@ -30,6 +30,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
-    "@types/jsonwebtoken": "^9.0.7"
+    "@types/jsonwebtoken": "^9.0.7",
+    "cross-env": "^7.0.3"
   }
 }

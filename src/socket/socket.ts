@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import http from "http";
-import prismaClient from "../config/db.config";
+import prismaClient from "../config/db.config.js";
 
 const userSocketMap = new Map<string, string>();
 const userSocketMapVideo = new Map<string, string>();

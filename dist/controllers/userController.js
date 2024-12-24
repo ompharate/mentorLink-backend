@@ -1,4 +1,4 @@
-import prismaClient from "../config/db.config";
+import prismaClient from "../config/db.config.js";
 class User {
     static async getUser(req, res) {
         const params = await req.params;
@@ -22,6 +22,23 @@ class User {
         return res.json({
             ...response,
             isMentor: true,
+        });
+    }
+    static async allocateMentor(req, res) {
+        const { userId, mentorId } = await req.body;
+        if (!userId || !mentorId) {
+            return res.json({
+                message: "Please provide user ID and instructor ID",
+            });
+        }
+        await prismaClient.userInstructor.create({
+            data: {
+                userId,
+                instructorId: mentorId,
+            },
+        });
+        return res.json({
+            message: "Instructor linked successfully",
         });
     }
 }

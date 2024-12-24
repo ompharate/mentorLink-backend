@@ -1,4 +1,4 @@
-import prismaClient from "../config/db.config";
+import prismaClient from "../config/db.config.js";
 
 interface InstructorPayload {
   userId: string;

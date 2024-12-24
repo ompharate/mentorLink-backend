@@ -1,4 +1,4 @@
-import prismaClient from "../config/db.config";
+import prismaClient from "../config/db.config.js";
 
 class User {
   static async getUser(req: any, res: any) {

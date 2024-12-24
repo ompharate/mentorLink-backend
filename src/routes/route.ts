@@ -28,6 +28,5 @@ router.post("/payment/create-order", paymentController.createOrder);
 //chat schema
 router.get("/user/chat/:userId", ChatController.getUserChatById);
 
-
 router.post("/user/video", ChatController.createVideoCall);
 export default router;
